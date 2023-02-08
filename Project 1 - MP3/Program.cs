@@ -4,17 +4,18 @@
     {
         static void Main(string[] args)
         {
-            CenterText("--------------------------------------");
             CenterText("Project: MP3 Tracker");
             CenterText("Project 1");
-            CenterText("------");
+            CenterText("-------------------");
             CenterText("Created By: Daniel Lynch");
-            CenterText("--------------------------------------");
+            CenterText("-----------------------------");
 
             string name;
             CenterText("Please Enter Your Name:");
             name = Console.ReadLine();
-            CenterText("--------------------------------------");
+            CenterText("Press <Enter> to continue");
+            while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+            Console.Clear();
 
             do
             {
@@ -41,7 +42,7 @@
                     CenterText(name);
                     Environment.Exit(0);
                 }
-                else if(userInput < 1 || userInput > 3)
+                else
                 {
                     Console.WriteLine("Please Try Agian");
                 }
