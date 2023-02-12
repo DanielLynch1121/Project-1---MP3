@@ -14,6 +14,19 @@ namespace Project_1___MP3
     {
         static void Main(string[] args)
         {
+            string songTitle;
+            string artist;
+            string songReleaseDate;
+            double playbackTimeInMinutes;
+            string genre;
+            Genre getParse;
+            decimal downloadCost;
+            double fileSizeInMBs;
+            string albumCoverPhoto;
+
+            MP3 userMP3 = null;
+            Dictionary <string, MP3> mp3Dictionary = new Dictionary <string, MP3>();
+
             CenterText("Project: MP3 Tracker");
             CenterText("-----------------");
             CenterText("Demonstrates the functionality of the MP3 class.");
@@ -24,8 +37,6 @@ namespace Project_1___MP3
             Console.Write("  Please Enter Your Name: ");
             name = Console.ReadLine();
            
-            MP3 userMP3 = null;
-
             do
             {
                 Console.Clear() ;
@@ -37,16 +48,6 @@ namespace Project_1___MP3
                 CenterText("3. Exit");
                 Console.Write("Type The Number Of Your Choice:");
                 userInput = int.Parse(Console.ReadLine());
-
-                string songTitle;
-                string artist;
-                string songReleaseDate;
-                double playbackTimeInMinutes;
-                string genre;
-                Genre getParse;
-                decimal downloadCost;
-                double fileSizeInMBs;
-                string albumCoverPhoto;
 
                 switch(userInput)
                 {
@@ -74,19 +75,33 @@ namespace Project_1___MP3
                         albumCoverPhoto = Console.ReadLine();
 
                         userMP3 = new MP3(songTitle, artist, songReleaseDate, playbackTimeInMinutes, getParse, downloadCost, fileSizeInMBs, albumCoverPhoto);
+
+                        mp3Dictionary.Add(songTitle, userMP3);
                         break;
                     case 2:
                 
                         Console.Clear();
                         if (userMP3 != null)
                         {
-                            Console.WriteLine(userMP3.ToString());
-                            CenterText("Press <Enter> to continue");
-                            while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+                            Console.Write(" Enter The Songs Title You Want To Serch For:");
+                            string titleSerch = Console.ReadLine();
+
+                            if (mp3Dictionary.ContainsKey(titleSerch))
+                            {
+                                Console.WriteLine(mp3Dictionary[titleSerch].ToString());
+                                CenterText("Press <Enter> to continue");
+                                while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+                            }
+                            else
+                            {
+                                Console.WriteLine("MP3 Not found.");
+                                CenterText("Press <Enter> to continue");
+                                while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+                            }    
                         }
                         else
                         {
-                            CenterText("No MP3 object exists. Please create one first.");
+                            CenterText("No MP3 exists. Please create one first.");
                             CenterText("Press <Enter> to continue");
                             while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                         }
