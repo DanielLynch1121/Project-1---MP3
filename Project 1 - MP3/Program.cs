@@ -15,18 +15,15 @@ namespace Project_1___MP3
         static void Main(string[] args)
         {
             CenterText("Project: MP3 Tracker");
+            CenterText("-----------------");
             CenterText("Demonstrates the functionality of the MP3 class.");
             CenterText("-------------------");
             CenterText("Created By: Daniel Lynch");
-            CenterText("---------------------------");
 
             string name;
-            Console.Write("     Please Enter Your Name:");
+            Console.Write("  Please Enter Your Name: ");
             name = Console.ReadLine();
-            CenterText("Press <Enter> to continue");
-            while (Console.ReadKey().Key != ConsoleKey.Enter) { }
-            Console.Clear();
-            
+           
             MP3 userMP3 = null;
 
             do
@@ -56,24 +53,24 @@ namespace Project_1___MP3
                     case 1:
                     
                         Console.Clear();
-                        Console.WriteLine("       Create an MP3");
-                        Console.WriteLine("-----------------------------");
-                        Console.Write("1. Please Enter The Songs Title:");
+                        CenterText("Create an MP3");
+                        CenterText("-----------------------------");
+                        Console.Write(" 1. Please Enter The Songs Title:");
                         songTitle = Console.ReadLine();
-                        Console.Write("2. Please Enter The Artit's Name:");
+                        Console.Write(" 2. Please Enter The Artit's Name:");
                         artist = Console.ReadLine();
-                        Console.Write("3. Please Enter The Release Date (MM/DD/YYYY): ");
+                        Console.Write(" 3. Please Enter The Release Date (MM/DD/YYYY): ");
                         songReleaseDate = Console.ReadLine();
-                        Console.Write("4. Please Enter The Playback Time (Minutes):");
+                        Console.Write(" 4. Please Enter The Playback Time (Minutes):");
                         playbackTimeInMinutes = Convert.ToDouble(Console.ReadLine());
-                        Console.Write("5. Please Enter The Song's Genre (Rock, Pop, Jazz, Country, Classical, Lofi, Funk, Rap, Other):");
+                        Console.Write(" 5. Please Enter The Song's Genre (Rock, Pop, Jazz, Country, Classical, Lofi, Funk, Rap, Other):");
                         genre = Console.ReadLine();
                         Enum.TryParse(genre, out getParse);
-                        Console.Write("6. Please Enter The Download Cost:");
+                        Console.Write(" 6. Please Enter The Download Cost:");
                         downloadCost = Convert.ToDecimal(Console.ReadLine());
-                        Console.Write("7. Please Enter The File Size (MB):");
+                        Console.Write(" 7. Please Enter The File Size (MB):");
                         fileSizeInMBs = Convert.ToDouble(Console.ReadLine());
-                        Console.Write("8. Please Enter the Path Of The Album Cover Photo:");
+                        Console.Write(" 8. Please Enter the Path Of The Album Cover Photo:");
                         albumCoverPhoto = Console.ReadLine();
 
                         userMP3 = new MP3(songTitle, artist, songReleaseDate, playbackTimeInMinutes, getParse, downloadCost, fileSizeInMBs, albumCoverPhoto);
@@ -103,7 +100,11 @@ namespace Project_1___MP3
                         break;
 
                     default:
-                        Console.WriteLine("Please Enter a Number 1-3");
+                        Console.Clear();
+                        CenterText("Please Enter a Number 1-3");
+                        CenterText("----------------------------");
+                        CenterText("Press <Enter> to continue");
+                        while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                         break;
                 }
             }
