@@ -152,8 +152,8 @@ namespace Project_1___MP3
             info += $"\n         Title: {_songTitle}";
             info += $"\n        Artist: {_artist}";
             info += $"\n  Release Date: {_songReleaseDate}                Genre:        {_genre}";
-            info += $"\n Download Cost: {_downloadCost}               File Size:        {_fileSizeInMBs}";
-            info += $"\n Song Playtime: {_playbackTimeInMinutes}    Album Photo:        {_albumCoverPhoto}";
+            info += $"\n Download Cost: {_downloadCost}            File Size:        {_fileSizeInMBs}";
+            info += $"\n Song Playtime: {_playbackTimeInMinutes}            Album Photo:        {_albumCoverPhoto}";
 
             return info;
         }
