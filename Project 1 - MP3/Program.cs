@@ -25,6 +25,7 @@ namespace Project_1___MP3
             string albumCoverPhoto;
 
             MP3 userMP3 = null;
+            List <string> mp3List = new List <string> (); 
             Dictionary <string, MP3> mp3Dictionary = new Dictionary <string, MP3>();
 
             CenterText("Project: MP3 Tracker");
@@ -75,7 +76,7 @@ namespace Project_1___MP3
                         albumCoverPhoto = Console.ReadLine();
 
                         userMP3 = new MP3(songTitle, artist, songReleaseDate, playbackTimeInMinutes, getParse, downloadCost, fileSizeInMBs, albumCoverPhoto);
-
+                        mp3List.Add(songTitle);
                         mp3Dictionary.Add(songTitle, userMP3);
                         break;
                     case 2:
@@ -83,12 +84,20 @@ namespace Project_1___MP3
                         Console.Clear();
                         if (userMP3 != null)
                         {
-                            Console.Write(" Enter The Songs Title You Want To Serch For:");
-                            string titleSerch = Console.ReadLine();
+                            CenterText("Songs Made:");
+                            CenterText("------------------");
 
-                            if (mp3Dictionary.ContainsKey(titleSerch))
+                            foreach(string song in mp3List )
                             {
-                                Console.WriteLine(mp3Dictionary[titleSerch].ToString());
+                                CenterText($"{ song}:");
+                            }
+
+                            Console.Write("Enter The Songs Title You Want To Search For:");
+                            string titleSearch = Console.ReadLine();
+
+                            if (mp3Dictionary.ContainsKey(titleSearch))
+                            {
+                                Console.WriteLine(mp3Dictionary[titleSearch].ToString());
                                 CenterText("Press <Enter> to continue");
                                 while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                             }
