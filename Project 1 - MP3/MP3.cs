@@ -84,7 +84,14 @@ namespace Project_1___MP3
         }
         public void SetGenre(Genre genre)
         {
-            _genre = genre;
+            if (Enum.IsDefined(typeof(Genre), genre))
+            {
+                _genre = genre;
+            }
+            else
+            {
+                _genre = Genre.Invalid;
+            }
         }
         public void SetDownlodCost(decimal downlodCost)
         {

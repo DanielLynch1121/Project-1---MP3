@@ -28,16 +28,15 @@ namespace Project_1___MP3
             string playlistName;
             string creatorName;
             string creationDate;
-            bool playlistCreated = false;
             
             MP3 userMP3 = null;
             Playlist userPlaylist = null;
 
             // Welcome Page with my center text Method
             CenterText("Project: MP3 Tracker");
-            CenterText("-----------------");
+            CenterText("-------------------------------");
             CenterText("Demonstrates the functionality of the MP3 class.");
-            CenterText("-------------------");
+            CenterText("-------------------------------");
             CenterText("Created By: Daniel Lynch");
 
             string name;
@@ -69,6 +68,8 @@ namespace Project_1___MP3
                 if (!int.TryParse(Console.ReadLine(), out userInput) || userInput < 1 || userInput > 11)
                 {
                     CenterText("Invalid choice. Please enter a number from 1 to 11.");
+                    CenterText("Press <Enter> to continue");
+                    while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                 }
 
                 switch (userInput)
@@ -76,22 +77,21 @@ namespace Project_1___MP3
                     // Case 1 Creates A New Playlist object
                     case 1:
                         Console.Clear();
-                        Console.WriteLine("1. Please Enter the Playlist Name: ");
+                        Console.Write("1. Please Enter the Playlist Name: ");
                         playlistName = Console.ReadLine();
-                        Console.WriteLine("2. Please Enter the Creators Name: ");
+                        Console.Write("2. Please Enter the Creators Name: ");
                         creatorName = Console.ReadLine();
-                        Console.WriteLine("3. Please enter the Creation Date MM/DD/YYYY: ");
+                        Console.Write("3. Please enter the Creation Date MM/DD/YYYY: ");
                         creationDate = Console.ReadLine();
                         
                         userPlaylist = new Playlist(playlistName, creatorName, creationDate);
-                        playlistCreated = true;
                         break;
                     
                     // Case 2 Creates a new MP3 Object and Stores it in the playlist
                     case 2:
                         Console.Clear();
 
-                        if (playlistCreated = true)
+                        if (userPlaylist != null)
                         {
                             try
                             {
@@ -103,16 +103,16 @@ namespace Project_1___MP3
                                 artist = Console.ReadLine();
                                 Console.Write(" 3. Please Enter The Release Date (MM/DD/YYYY): ");
                                 songReleaseDate = Console.ReadLine();
-                                Console.Write(" 4. Please Enter The Playback Time (Minutes):");
+                                Console.Write(" 4. Please Enter The Playback Time (Minutes): ");
                                 playbackTimeInMinutes = Convert.ToDouble(Console.ReadLine());
-                                Console.Write(" 5. Please Enter The Song's Genre (Rock, Pop, Jazz, Country, Classical, Lofi, Funk, Rap, Other):");
+                                Console.Write(" 5. Please Enter The Song's Genre (Rock, Pop, Jazz, Country, Classical, Lofi, Funk, Rap, Other): ");
                                 genre = Console.ReadLine();
                                 Enum.TryParse(genre, out getParse);
                                 Console.Write(" 6. Please Enter The Download Cost: $");
                                 downloadCost = Convert.ToDecimal(Console.ReadLine());
-                                Console.Write(" 7. Please Enter The File Size (MB):");
+                                Console.Write(" 7. Please Enter The File Size (MB): ");
                                 fileSizeInMBs = Convert.ToDouble(Console.ReadLine());
-                                Console.Write(" 8. Please Enter the Path Of The Album Cover Photo:");
+                                Console.Write(" 8. Please Enter the Path Of The Album Cover Photo: ");
                                 albumCoverPhoto = Console.ReadLine();
 
                                 userMP3 = new MP3(songTitle, artist, songReleaseDate, playbackTimeInMinutes, getParse, downloadCost, fileSizeInMBs, albumCoverPhoto);
@@ -121,15 +121,16 @@ namespace Project_1___MP3
                             }
                             catch
                             {
-                                Console.WriteLine();
+                                CenterText("please be sure to enter correct data... MB(100), $(2.00), Minutes(1)");
                             }
                         }
-                        else
+                        else 
                         {
+                            Console.Clear();
                             CenterText("Please Create a Playlist Before adding MP3s to it.");
-                            CenterText("Press <Enter> to continue");
-                            while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                         }
+                        CenterText("Press <Enter> to continue");
+                        while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                         break;
                     case 3:
                         Console.Clear();
@@ -158,7 +159,6 @@ namespace Project_1___MP3
                                 CenterText("Press <Enter> to continue");
                                 while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                             }
-                        
                         }
                         
                         break;
