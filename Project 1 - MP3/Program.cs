@@ -154,11 +154,8 @@ namespace Project_1___MP3
                             {
                                 Console.WriteLine("Please enter the title and a number 1-3.");
                             }
-                            finally
-                            {
-                                CenterText("Press <Enter> to continue");
+                               CenterText("Press <Enter> to continue");
                                 while (Console.ReadKey().Key != ConsoleKey.Enter) { }
-                            }
                         }
                         
                         break;
@@ -167,6 +164,8 @@ namespace Project_1___MP3
                         Console.WriteLine("Enter the title of the song you would like to remove: ");
                         string titleToRemove = Console.ReadLine();
                         userPlaylist.DeleteMP3ByTitle(titleToRemove);
+                        CenterText("Press <Enter> to continue");
+                        while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                         break;
                     case 5:
                         Console.Clear();
@@ -183,48 +182,104 @@ namespace Project_1___MP3
                         break;
                     case 6:
                         Console.Clear();
-                        if(userPlaylist != null && userMP3 != null)
+                        Console.Clear();
+                        if (userPlaylist != null && userMP3 != null)
                         {
                             try
                             {
                                 Console.WriteLine("Enter the title of the song you would like to search for: ");
                                 string titleEdit = Console.ReadLine();
-                                userPlaylist.SearchByTitle(titleEdit);
+                                List<MP3> results = userPlaylist.SearchByTitle(titleEdit);
+                                if (results.Count > 0)
+                                {
+                                    Console.WriteLine("Matching MP3s found:");
+                                    foreach (MP3 mp3 in results)
+                                    {
+                                        Console.WriteLine(mp3);
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("No matching MP3s found.");
+                                }
                                 CenterText("Press <Enter> to continue");
                                 while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                             }
                             catch
                             {
-                                Console.WriteLine("The song you are looking for hasent been created yet.");
+                                Console.WriteLine("The song you are looking for hasn't been created yet.");
+                                CenterText("Press <Enter> to continue");
+                                while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+                            }
+                        }
+
+                        break;
+                    case 7:
+                        Console.Clear();
+                        if (userPlaylist != null && userMP3 != null)
+                        {
+                            try
+                            {
+                                Console.WriteLine("Enter the genre of the songs you would like to search for: ");
+                                Genre searchGenre = (Genre)Enum.Parse(typeof(Genre), Console.ReadLine(), true);
+                                List<MP3> results = userPlaylist.SearchByGenre(searchGenre);
+                                if (results.Count > 0)
+                                {
+                                    Console.WriteLine($"Found {results.Count} MP3(s) with genre {searchGenre}:");
+                                    foreach (MP3 mp3 in results)
+                                    {
+                                        Console.WriteLine($"{mp3.GetSongTitle()} by {mp3.GetArtist()}");
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"No MP3s found with genre {searchGenre}.");
+                                }
+                                CenterText("Press <Enter> to continue");
+                                while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+                            }
+                            catch
+                            {
+                                Console.WriteLine("Invalid genre entered.");
                                 CenterText("Press <Enter> to continue");
                                 while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                             }
                         }
                         break;
-                    case 7:
+                    case 8:
                         Console.Clear();
-                        userPlaylist.DisplayAllMP3s();
-                        Console.WriteLine("Press <Enter> to continue");
-                        while (Console.ReadKey().Key != ConsoleKey.Enter) { }
-                        break;
-                    case 8: 
-                        Console.Clear();
-                        Console.Write("What is the name of the artist you want to search for? ");
-                        string artistSearch = Console.ReadLine();
-                        userPlaylist.SearchByArtist(artistSearch);
+                        if (userPlaylist != null && userMP3 != null)
+                        {
+                            try
+                            {
+                                Console.WriteLine("Enter the name of the artist you would like to search for: ");
+                                string artistName = Console.ReadLine();
+                                List<MP3> results = userPlaylist.SearchByArtist(artistName);
+                                Console.WriteLine($"Here are all the MP3s in the playlist by {artistName}:");
+                                foreach (MP3 mp3 in results)
+                                {
+                                    Console.WriteLine(mp3.ToString());
+                                }
+                                CenterText("Press <Enter> to continue");
+                                while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+                            }
+                            catch
+                            {
+                                Console.WriteLine("No MP3s by that artist found in the playlist.");
+                                CenterText("Press <Enter> to continue");
+                                while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+                            }
+                        }
                         break;
                     case 9:
                         Console.Clear();
-                        Console.Write("What is the title of the song you want to search for? ");
-                        string titleSearch = Console.ReadLine();
-                        userPlaylist.SearchByTitle(titleSearch);
-                        Console.WriteLine("Press <Enter> to continue");
+                        userPlaylist.SortByTitle();
                         while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                         break;
                     case 10:
                         Console.Clear();
                         userPlaylist.SortByDate();
-                        Console.WriteLine("Press <Enter> to continue");
+                        CenterText("Press <Enter> to continue");
                         while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                         break;
                     case 11:

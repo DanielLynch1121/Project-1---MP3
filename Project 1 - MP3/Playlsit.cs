@@ -116,11 +116,15 @@ namespace Project_1___MP3
         }
         public List<MP3> SearchByArtist(string artistName)
         {
-            return _playlist.FindAll(mp3 => mp3.GetArtist().Equals(artistName));
+            return _playlist.FindAll(mp3 => mp3.GetSongTitle().Contains(artistName));
         }
         public List<MP3> SearchByTitle(string title)
         {
             return _playlist.FindAll(mp3 => mp3.GetSongTitle().Contains(title));
+        }
+        public List<MP3> SearchByGenre(Genre genre)
+        {
+            return _playlist.FindAll(mp3 => mp3.GetGenre() == genre);
         }
 
         public override string ToString()
