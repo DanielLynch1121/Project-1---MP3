@@ -1,7 +1,7 @@
 ﻿/**
 *--------------------------------------------------------------------
 * File name: {MP3.cs}
-* Project name: {Project 1 - MP3}
+* Project name: {Project 3 - MP3}
 *--------------------------------------------------------------------
 * Author’s name and email: {Daniel Lynch ynchda@etsu.edu}
 * Course-Section: {002}
