@@ -285,6 +285,10 @@ namespace Project_1___MP3
                         while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                         break;
                     case 11:
+                        Console.Clear();
+                        Console.Write("Enter the file path of the MP3s you would like to import:");
+                        string filePath = Console.ReadLine();
+                        Playlist.FillFromFile(filePath);
                         break; 
                     case 12:
                         break;

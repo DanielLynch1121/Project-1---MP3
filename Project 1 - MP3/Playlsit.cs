@@ -127,7 +127,7 @@ namespace Project_1___MP3
         {
             return _playlist.FindAll(mp3 => mp3.GetGenre() == genre);
         }
-        public void FillFromFile(string filePath)
+        public static void FillFromFile(string filePath)
         {
             string[] lines = File.ReadAllLines(filePath);
 
@@ -151,9 +151,16 @@ namespace Project_1___MP3
                 }
             }
         }
-        public void SaveToFile(string )
+        public void SaveToFile(string fileName, string filePath)
         {
-
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                foreach(MP3 mp3 in _playlist)
+                {
+                    string line = $"";
+                    writer.WriteLine(line);
+                }
+            }
         }
         public override string ToString()
         {
