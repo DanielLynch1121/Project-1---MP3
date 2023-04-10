@@ -61,7 +61,9 @@ namespace Project_1___MP3
                 Console.WriteLine("8. Display all MP3s on the tracker with a given artist");
                 Console.WriteLine("9. Sort the MP3s by song title");
                 Console.WriteLine("10. Sort the MP3s by song release date");
-                Console.WriteLine("11. Exit");
+                Console.WriteLine("11. Import MP3's from file");
+                Console.WriteLine("12. Save Playlist to a file");
+                Console.WriteLine("13. Exit");
                 Console.Write("Type The Number Of Your Choice: ");
                 
                 // Validation for the number typed into the Main Menu
@@ -283,6 +285,10 @@ namespace Project_1___MP3
                         while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                         break;
                     case 11:
+                        break; 
+                    case 12:
+                        break;
+                    case 13:
                         Console.Clear();
                         CenterText("Goodbye, Thank you for choosing MP3 Tracker,");
                         CenterText(name);

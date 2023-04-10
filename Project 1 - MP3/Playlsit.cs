@@ -19,10 +19,11 @@ namespace Project_1___MP3
 {
     internal class Playlist
     { 
-        private List<MP3> _playlist;
-        private string _playlistName;
-        private string _creatorName;
-        private string _creationDate;
+        private List<MP3> _playlist { get; set; }
+        private string _playlistName { get; set; }
+        private string _creatorName { get; set; }
+        private string _creationDate { get; set; }
+        private bool saveNeeded { get; set; }
 
         public Playlist(string playlistName, string creatorName, string creationDate)
         {
@@ -126,7 +127,34 @@ namespace Project_1___MP3
         {
             return _playlist.FindAll(mp3 => mp3.GetGenre() == genre);
         }
+        public void FillFromFile(string filePath)
+        {
+            string[] lines = File.ReadAllLines(filePath);
 
+            foreach (string line in lines)
+            {
+                try
+                {
+                    string[] parts = line.Split('|');
+                    string songTitle = parts[0];
+                    string artist = parts[1];
+                    string songReleaseDate = parts[2];
+                    double playbackTimeInMinutes = double.Parse(parts[3]);
+                    
+                    decimal downloadcost = decimal.Parse(parts[4]);
+                    double fileSizeInMBs = double.Parse(parts[5]);
+                    string albumCoverPhoto = parts[6];
+                }
+                catch
+                {
+                    
+                }
+            }
+        }
+        public void SaveToFile(string )
+        {
+
+        }
         public override string ToString()
         {
             return $"{_playlistName} created by {_creatorName} on {_creationDate} with {_playlist.Count} MP3s.";
