@@ -17,13 +17,13 @@ using System.Xml.Linq;
 
 namespace Project_1___MP3
 {
-    internal class Playlist
+    public class Playlist
     { 
         private List<MP3> _playlist { get; set; }
         private string _playlistName { get; set; }
         private string _creatorName { get; set; }
         private string _creationDate { get; set; }
-        private bool saveNeeded { get; set; }
+        public  bool SaveNeeded { get; set; }
 
         public Playlist(string playlistName, string creatorName, string creationDate)
         {
@@ -36,6 +36,7 @@ namespace Project_1___MP3
         public void AddMP3(MP3 mp3)
         {
            _playlist.Add(mp3);
+           SaveNeeded = true;
         }
 
         public void DeleteMP3ByTitle(string title)
@@ -50,6 +51,7 @@ namespace Project_1___MP3
             {
                 Console.WriteLine($"No MP3 found with title '{title}'.");
             }
+            SaveNeeded = true;
             Console.WriteLine("Press <Enter> to continue");
             while (Console.ReadKey().Key != ConsoleKey.Enter) { }
         }
@@ -97,6 +99,7 @@ namespace Project_1___MP3
                 Console.WriteLine("Press <Enter> to continue");
                 while (Console.ReadKey().Key != ConsoleKey.Enter) { }
             }
+            
         }
 
         public void SortByTitle()
@@ -127,39 +130,75 @@ namespace Project_1___MP3
         {
             return _playlist.FindAll(mp3 => mp3.GetGenre() == genre);
         }
-        public static void FillFromFile(string filePath)
+        public static List<MP3> FillFromFile(string filePath)
         {
-            string[] lines = File.ReadAllLines(filePath);
+            List<MP3> mp3List = new List<MP3>();
 
-            foreach (string line in lines)
+            if (File.Exists(filePath))
             {
-                try
+                string[] lines = File.ReadAllLines(filePath);
+
+                foreach (string line in lines)
                 {
-                    string[] parts = line.Split('|');
-                    string songTitle = parts[0];
-                    string artist = parts[1];
-                    string songReleaseDate = parts[2];
-                    double playbackTimeInMinutes = double.Parse(parts[3]);
-                    
-                    decimal downloadcost = decimal.Parse(parts[4]);
-                    double fileSizeInMBs = double.Parse(parts[5]);
-                    string albumCoverPhoto = parts[6];
-                }
-                catch
-                {
+                    try
+                    {
+                        string[] parts = line.Split('|');
+                        string songTitle = parts[0];
+                        string artist = parts[1];
+                        string songReleaseDate = parts[2];
+                        double playbackTimeInMinutes = double.Parse(parts[3]);
+                        string genre = "Unknown";
+                        Enum.TryParse(parts[4], out Genre genreEnum);
+                        decimal downloadcost = decimal.Parse(parts[5]);
+                        double fileSizeInMBs = double.Parse(parts[6]);
+                        string albumCoverPhoto = parts[7];
+
+                        MP3 mp3 = new MP3(songTitle, artist, songReleaseDate, playbackTimeInMinutes, genreEnum, downloadcost, fileSizeInMBs, albumCoverPhoto);
+                        mp3List.Add(mp3);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error parsing line: " + line);
+                    }
                     
                 }
             }
+            else
+            {
+                Console.WriteLine("File does not exist at the given Path. ");
+            }
+            
+            return mp3List;
         }
         public void SaveToFile(string fileName, string filePath)
         {
-            using (StreamWriter writer = new StreamWriter(filePath))
+            try
             {
-                foreach(MP3 mp3 in _playlist)
+                using (StreamWriter writer = new StreamWriter(Path.Combine(filePath, fileName)))
                 {
-                    string line = $"";
-                    writer.WriteLine(line);
+                    foreach (MP3 mp3 in _playlist)
+                    {
+                        string line = $"{mp3.GetSongTitle}|{mp3.GetArtist}|{mp3.GetSongReleaseDate}|{mp3.GetPlayBackTimeInMinutes}" +
+                            $"|{mp3.GetGenre}|{mp3.GetDownloadCost}|{mp3.GetFileSizeInMBs}|{mp3.GetAlbumCoverPhoto}";
+                        writer.WriteLine(line);
+                    }
                 }
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine("An Error occured while writing to the file. ");
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                Console.WriteLine("Please Be sure you have access to the file you are trying to save to.");
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine("Please enter a valid file Path.");
+            }
+            catch
+            {
+                Console.WriteLine("An Error occured. ");
             }
         }
         public override string ToString()

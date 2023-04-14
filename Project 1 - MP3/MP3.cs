@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Project_1___MP3
 {
-    internal class MP3
+    public class MP3
     {
         private string _songTitle;
         private string _artist;

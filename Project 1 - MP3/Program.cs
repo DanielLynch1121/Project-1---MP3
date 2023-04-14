@@ -10,7 +10,7 @@
 */
 namespace Project_1___MP3
 {
-    internal class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -28,6 +28,7 @@ namespace Project_1___MP3
             string playlistName;
             string creatorName;
             string creationDate;
+            bool saveNeeded; 
             
             MP3 userMP3 = null;
             Playlist userPlaylist = null;
@@ -87,6 +88,7 @@ namespace Project_1___MP3
                         creationDate = Console.ReadLine();
                         
                         userPlaylist = new Playlist(playlistName, creatorName, creationDate);
+                        userPlaylist.SaveNeeded = true;
                         break;
                     
                     // Case 2 Creates a new MP3 Object and Stores it in the playlist
@@ -120,6 +122,7 @@ namespace Project_1___MP3
                                 userMP3 = new MP3(songTitle, artist, songReleaseDate, playbackTimeInMinutes, getParse, downloadCost, fileSizeInMBs, albumCoverPhoto);
 
                                 userPlaylist.AddMP3(userMP3);
+                                userPlaylist.SaveNeeded = true;
                             }
                             catch
                             {
@@ -150,6 +153,7 @@ namespace Project_1___MP3
                                 int mp3Attribute = int.Parse(Console.ReadLine());
 
                                 userPlaylist.EditMP3(searchTitle, mp3Attribute);
+                                userPlaylist.SaveNeeded = true; 
                                 istrue = true;
                             }
                             catch
@@ -166,6 +170,7 @@ namespace Project_1___MP3
                         Console.WriteLine("Enter the title of the song you would like to remove: ");
                         string titleToRemove = Console.ReadLine();
                         userPlaylist.DeleteMP3ByTitle(titleToRemove);
+                        userPlaylist.SaveNeeded = true;
                         CenterText("Press <Enter> to continue");
                         while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                         break;
@@ -288,15 +293,48 @@ namespace Project_1___MP3
                         Console.Clear();
                         Console.Write("Enter the file path of the MP3s you would like to import:");
                         string filePath = Console.ReadLine();
-                        Playlist.FillFromFile(filePath);
+
+                        List<MP3> mp3List = Playlist.FillFromFile(filePath);
+                        foreach (MP3 mp3 in mp3List)
+                        {
+                            userPlaylist.AddMP3(mp3);
+                        }
+                        CenterText("Press <Enter> to continue");
+                        while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                         break; 
                     case 12:
+                        Console.Clear();
+                        Console.Write("Please enter the file name: ");
+                        string fileName = Console.ReadLine();
+                        Console.Write("Please Enter the file path: ");
+                        string Path = Console.ReadLine();
+                        userPlaylist.SaveToFile(fileName, Path);
+                        userPlaylist.SaveNeeded = false;
+                        CenterText("Press <Enter> to continue");
+                        while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                         break;
                     case 13:
                         Console.Clear();
-                        CenterText("Goodbye, Thank you for choosing MP3 Tracker,");
-                        CenterText(name);
-                        Environment.Exit(0);
+                        if (userPlaylist != null && userPlaylist.SaveNeeded )
+                        {
+                            Console.WriteLine("Changes have been made to the playlist. Do you want to save before exiting? (Y/N)");
+                            string response = Console.ReadLine();
+
+                            if (response.ToLower() == "y")
+                            {
+                                Console.Write("Please enter the file name: ");
+                                string nameOfFile = Console.ReadLine();
+                                Console.Write("Please Enter the file path: ");
+                                string pathOfFile = Console.ReadLine();
+                                userPlaylist.SaveToFile(nameOfFile, pathOfFile);                                
+                            }
+                        }
+                        else
+                        {
+                            CenterText("Goodbye, Thank you for choosing MP3 Tracker,");
+                            CenterText(name);
+                            Environment.Exit(0);
+                        }
                         break;
                 }
             }
