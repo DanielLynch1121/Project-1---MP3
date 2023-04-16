@@ -10,6 +10,7 @@
 */
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,10 +23,10 @@ namespace Project_1___MP3
         private List<MP3> _playlist { get; set; }
         private string _playlistName { get; set; }
         private string _creatorName { get; set; }
-        private string _creationDate { get; set; }
+        private DateTime _creationDate { get; set; }
         public  bool SaveNeeded { get; set; }
 
-        public Playlist(string playlistName, string creatorName, string creationDate)
+        public Playlist(string playlistName, string creatorName, DateTime creationDate)
         {
             _playlistName = playlistName;
             _creatorName = creatorName;
@@ -108,9 +109,8 @@ namespace Project_1___MP3
         }
         public void SortByDate()
         {
-            _playlist.Sort((mp31, mp32) => DateTime.Parse(mp31.GetSongReleaseDate()).CompareTo(DateTime.Parse(mp32.GetSongReleaseDate())));
+            _playlist.Sort((mp1, mp2) => mp1.GetSongReleaseDate().CompareTo(mp2.GetSongReleaseDate()));
         }
-
         public void DisplayAllMP3s()
         {
             foreach(MP3 mp3 in _playlist)
@@ -136,6 +136,7 @@ namespace Project_1___MP3
 
             if (File.Exists(filePath))
             {
+                string songReleaseDatestr = null;
                 string[] lines = File.ReadAllLines(filePath);
 
                 foreach (string line in lines)
@@ -145,7 +146,7 @@ namespace Project_1___MP3
                         string[] parts = line.Split('|');
                         string songTitle = parts[0];
                         string artist = parts[1];
-                        string songReleaseDate = parts[2];
+                        DateTime songReleaseDate = DateTime.ParseExact(songReleaseDatestr, "MM/dd/yyyy", CultureInfo.InvariantCulture);
                         double playbackTimeInMinutes = double.Parse(parts[3]);
                         string genre = "Unknown";
                         Enum.TryParse(parts[4], out Genre genreEnum);
@@ -184,15 +185,15 @@ namespace Project_1___MP3
                     }
                 }
             }
-            catch (IOException ex)
+            catch (IOException)
             {
                 Console.WriteLine("An Error occured while writing to the file. ");
             }
-            catch (UnauthorizedAccessException ex)
+            catch (UnauthorizedAccessException)
             {
                 Console.WriteLine("Please Be sure you have access to the file you are trying to save to.");
             }
-            catch (ArgumentException ex)
+            catch (ArgumentException)
             {
                 Console.WriteLine("Please enter a valid file Path.");
             }

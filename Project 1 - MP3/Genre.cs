@@ -26,7 +26,6 @@ namespace Project_1___MP3
         Lofi,
         Funk,
         Rap,
-        Other,
-        Invalid
+        Other
     }
 }

@@ -1,0 +1,10 @@
+﻿Walking on Sunshine|Katrina and the Waves|06/01/1985|3.59|Pop|0.99|85.3|WalkingOnSunshine.jpg
+Bohemian Rhapsody|Queen|10/31/1975|5.55|Rock|1.29|134.8|BohemianRhapsody.jpg
+Smooth|Santana ft. Rob Thomas|06/29/1999|4.57|Rock|0.99|105.6|Supernatural.jpg
+Uptown Funk|Mark Ronson ft. Bruno Mars|11/10/2014|4.30|Pop|1.29|99.7|UptownFunk.jpg
+Billie Jean|Michael Jackson|01/02/1983|4.54|Pop|0.99|105.9|Thriller.jpg
+Stairway to Heaven|Led Zeppelin|11/08/1971|8.03|Rock|1.29|195.2|LedZeppelinIV.jpg
+Hey Jude|The Beatles|08/26/1968|7.11|Pop|1.29|172.7|HeyJude.jpg
+Livin' on a Prayer|Bon Jovi|10/31/1986|4.10|Rock|0.99|93.9|SlipperyWhenWet.jpg
+Sweet Child O' Mine|Guns N' Roses|08/17/1987|5.55|Rock|1.29|134.8|AppetiteForDestruction.jpg
+Purple Haze|Jimi Hendrix|03/17/1967|2.51|Rock|0.99|58.6|AreYouExperienced.jpg

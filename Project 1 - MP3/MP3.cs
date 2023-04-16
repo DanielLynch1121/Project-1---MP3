@@ -20,7 +20,7 @@ namespace Project_1___MP3
     {
         private string _songTitle;
         private string _artist;
-        private string _songReleaseDate;
+        private DateTime _songReleaseDate;
         private double _playbackTimeInMinutes;
         private Genre _genre;
         private decimal _downloadCost;
@@ -35,7 +35,7 @@ namespace Project_1___MP3
         { 
             return _artist;
         }
-        public string GetSongReleaseDate()
+        public DateTime GetSongReleaseDate()
         {
             return _songReleaseDate;
         }
@@ -67,7 +67,7 @@ namespace Project_1___MP3
         {
             _artist = artist;
         }
-        public void SetSongReleaseDate(string songReleaseDate)
+        public void SetSongReleaseDate(DateTime songReleaseDate)
         {
             _songReleaseDate = songReleaseDate;
         }
@@ -90,7 +90,7 @@ namespace Project_1___MP3
             }
             else
             {
-                _genre = Genre.Invalid;
+                _genre = Genre.Other;
             }
         }
         public void SetDownlodCost(decimal downlodCost)
@@ -123,14 +123,14 @@ namespace Project_1___MP3
         {
             SetSongTitle("Title");
             SetArtist("Artist");
-            SetSongReleaseDate("MM/DD/YYYY");
+            SetSongReleaseDate(new DateTime(2004, 03, 23));
             SetPlayBackTimeInMinutes(3.32);
             SetGenre(Genre.Other);
             SetDownlodCost(1);
             SetFileSizeInMSs(6.6);
             SetAlbumCoverPhoto("photos\\FunkyTown.jpg");
         }
-        public MP3(string songTitle, string artist, string songReleaseDate, double playbackTimeInMinutes, Genre genre, decimal downloadCost, double fileSizeInMBs, string albumCoverPhoto)
+        public MP3(string songTitle, string artist, DateTime songReleaseDate, double playbackTimeInMinutes, Genre genre, decimal downloadCost, double fileSizeInMBs, string albumCoverPhoto)
         {
             SetSongTitle(songTitle);
             SetArtist(artist);
