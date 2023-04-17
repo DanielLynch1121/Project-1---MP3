@@ -71,7 +71,7 @@ namespace Project_1___MP3
                 Console.Write("Type The Number Of Your Choice: ");
                 
                 // Validation for the number typed into the Main Menu
-                if (!int.TryParse(Console.ReadLine(), out userInput) || userInput < 1 || userInput > 11)
+                if (!int.TryParse(Console.ReadLine(), out userInput) || userInput < 1 || userInput > 13)
                 {
                     CenterText("Invalid choice. Please enter a number from 1 to 11.");
                     CenterText("Press <Enter> to continue");
@@ -137,7 +137,7 @@ namespace Project_1___MP3
                                 Console.Write("Invalid date format. Please enter the date in MM/DD/YYYY format: ");
                                 releaseDate = Console.ReadLine();
                             }
-                            Console.Write("4. Please Enter The Playback Time (Minutes): ");
+                            Console.Write(" 4. Please Enter The Playback Time (Minutes): ");
                             while (!double.TryParse(Console.ReadLine(), out playbackTimeInMinutes) || playbackTimeInMinutes <= 0)
                             {
                                 Console.Write("Invalid input. Please enter a positive number for the playback time in minutes: ");
@@ -160,12 +160,11 @@ namespace Project_1___MP3
                             {
                                 Console.Write("Invalid input. Please enter a positive number for the file size: ");
                             }
-                            fileSizeInMBs = Convert.ToDouble(Console.ReadLine());
                             Console.Write(" 8. Please Enter the Path Of The Album Cover Photo: ");
+                            albumCoverPhoto = Console.ReadLine();
                             while (string.IsNullOrEmpty(albumCoverPhoto))
                             {
                                 Console.Write("The album Cover photo path cannot be empty. Please enter the path again: ");
-                                songTitle = Console.ReadLine();
                             }
                             userMP3 = new MP3(songTitle, artist, songReleaseDate, playbackTimeInMinutes, getParse, downloadCost, fileSizeInMBs, albumCoverPhoto);
 
@@ -266,8 +265,7 @@ namespace Project_1___MP3
                                 {
                                     Console.WriteLine("No matching MP3s found.");
                                 }
-                                CenterText("Press <Enter> to continue");
-                                while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+                                
                             }
                             catch
                             {
@@ -276,7 +274,8 @@ namespace Project_1___MP3
                                 while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                             }
                         }
-
+                        CenterText("Press <Enter> to continue");
+                        while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                         break;
                     case 7:
                         Console.Clear();
@@ -287,8 +286,6 @@ namespace Project_1___MP3
                             if (!Enum.TryParse(Console.ReadLine(), true, out searchGenre))
                             {
                                 Console.WriteLine("Invalid genre. Please enter a valid genre.");
-                                CenterText("Press <Enter> to continue");
-                                while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                                 return;
                             }
 
@@ -305,10 +302,9 @@ namespace Project_1___MP3
                             {
                                 Console.WriteLine($"No MP3s found with genre {searchGenre}.");
                             }
-                            CenterText("Press <Enter> to continue");
-                            while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                         }
-
+                        CenterText("Press <Enter> to continue");
+                        while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                         break;
                     case 8:
                         Console.Clear();
@@ -329,20 +325,19 @@ namespace Project_1___MP3
                                 {
                                     Console.WriteLine(mp3.ToString());
                                 }
-                                CenterText("Press <Enter> to continue");
-                                while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                             }
                             catch
                             {
                                 Console.WriteLine("No MP3s by that artist found in the playlist.");
-                                CenterText("Press <Enter> to continue");
-                                while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                             }
                         }
+                        CenterText("Press <Enter> to continue");
+                        while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                         break;
                     case 9:
                         Console.Clear();
                         userPlaylist.SortByTitle();
+                        CenterText("Press <Enter> to continue");
                         while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                         break;
                     case 10:
@@ -366,7 +361,6 @@ namespace Project_1___MP3
                                     Console.Write("File name cannot be empty. Please enter the file name again: ");
                                     savefileName = Console.ReadLine();
                                 }
-
                                 Console.WriteLine("Enter the file path to save the playlist:");
                                 string saveFilePath = Console.ReadLine();
                                 while (string.IsNullOrEmpty(saveFilePath))
@@ -377,23 +371,28 @@ namespace Project_1___MP3
                                 userPlaylist.SaveToFile(savefileName, saveFilePath);
                             }
                         }
-                        Console.Write("Enter the file path of the MP3s you would like to import:");
-                        string filePath = Console.ReadLine();
-                        while (string.IsNullOrEmpty(filePath))
+                        if (userPlaylist != null)
                         {
-                            Console.Write("File path cannot be empty. Please enter the file path again: ");
-                            filePath = Console.ReadLine();
+                            Console.Write("Enter the file path of the MP3s you would like to import:");
+                            string filePath = Console.ReadLine();
+                            while (string.IsNullOrEmpty(filePath))
+                            {
+                                Console.Write("File path cannot be empty. Please enter the file path again: ");
+                                filePath = Console.ReadLine();
+                            }
+                            Playlist importedPlaylist = Playlist.FillFromFile(filePath);
+                            if (importedPlaylist != null)
+                            {
+                                foreach (MP3 mp3 in importedPlaylist.GetMP3s())
+                                {
+                                    userPlaylist.AddMP3(mp3);
+                                }
+                                userPlaylist.DisplayAllMP3s();
+                            }   
+                            CenterText("Press <Enter> to continue");
+                            while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                         }
-                        List<MP3> mp3List = Playlist.FillFromFile(filePath);
-                        foreach (MP3 mp3 in mp3List)
-                        {
-                            userPlaylist.AddMP3(mp3);
-                        }
-                        saveNeeded = true;
-                        CenterText("Press <Enter> to continue");
-                        while (Console.ReadKey().Key != ConsoleKey.Enter) { }
-
-                        break; 
+                        break;
                     case 12:
                         Console.Clear();
                         Console.Write("Please enter the file name: ");

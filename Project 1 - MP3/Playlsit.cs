@@ -53,8 +53,6 @@ namespace Project_1___MP3
                 Console.WriteLine($"No MP3 found with title '{title}'.");
             }
             SaveNeeded = true;
-            Console.WriteLine("Press <Enter> to continue");
-            while (Console.ReadKey().Key != ConsoleKey.Enter) { }
         }
         public void EditMP3(string songTitle, int attribute)
         {
@@ -130,46 +128,45 @@ namespace Project_1___MP3
         {
             return _playlist.FindAll(mp3 => mp3.GetGenre() == genre);
         }
-        public static List<MP3> FillFromFile(string filePath)
+        public static Playlist FillFromFile(string filePath)
         {
-            List<MP3> mp3List = new List<MP3>();
-
-            if (File.Exists(filePath))
+            Playlist playlist = new Playlist("name", "creator", new DateTime(2004, 03, 23));
+            if (!File.Exists(filePath))
             {
-                string songReleaseDatestr = null;
-                string[] lines = File.ReadAllLines(filePath);
+                Console.WriteLine("File does not exist at the given path.");
+                return playlist;
+            }
+            string[] lines = File.ReadAllLines(filePath);
 
-                foreach (string line in lines)
+            foreach (string line in lines)
+            {
+                try
                 {
-                    try
-                    {
-                        string[] parts = line.Split('|');
-                        string songTitle = parts[0];
-                        string artist = parts[1];
-                        DateTime songReleaseDate = DateTime.ParseExact(songReleaseDatestr, "MM/dd/yyyy", CultureInfo.InvariantCulture);
-                        double playbackTimeInMinutes = double.Parse(parts[3]);
-                        string genre = "Unknown";
-                        Enum.TryParse(parts[4], out Genre genreEnum);
-                        decimal downloadcost = decimal.Parse(parts[5]);
-                        double fileSizeInMBs = double.Parse(parts[6]);
-                        string albumCoverPhoto = parts[7];
+                    string[] parts = line.Split('|');
+                    string songTitle = parts[0];
+                    string artist = parts[1];
+                    DateTime songReleaseDate = DateTime.ParseExact(parts[2], "MM/dd/yyyy", CultureInfo.InvariantCulture);
+                    double playbackTimeInMinutes = double.Parse(parts[3]);
+                    string genre = parts[4];
+                    Genre genreEnum = (Genre)Enum.Parse(typeof(Genre), genre);
+                    decimal downloadCost = decimal.Parse(parts[5]);
+                    double fileSizeInMBs = double.Parse(parts[6]);
+                    string albumCoverPhoto = parts[7];
 
-                        MP3 mp3 = new MP3(songTitle, artist, songReleaseDate, playbackTimeInMinutes, genreEnum, downloadcost, fileSizeInMBs, albumCoverPhoto);
-                        mp3List.Add(mp3);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Error parsing line: " + line);
-                    }
-                    
+                    MP3 mp3 = new MP3(songTitle, artist, songReleaseDate, playbackTimeInMinutes, genreEnum, downloadCost, fileSizeInMBs, albumCoverPhoto);
+                    playlist.AddMP3(mp3);
+                    Console.WriteLine("Line parsed successfully: " + line);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error parsing line: " + line);
                 }
             }
-            else
-            {
-                Console.WriteLine("File does not exist at the given Path. ");
-            }
-            
-            return mp3List;
+            return playlist;
+        }
+        public List<MP3> GetMP3s()
+        {
+            return _playlist;
         }
         public void SaveToFile(string fileName, string filePath)
         {
@@ -179,8 +176,8 @@ namespace Project_1___MP3
                 {
                     foreach (MP3 mp3 in _playlist)
                     {
-                        string line = $"{mp3.GetSongTitle}|{mp3.GetArtist}|{mp3.GetSongReleaseDate}|{mp3.GetPlayBackTimeInMinutes}" +
-                            $"|{mp3.GetGenre}|{mp3.GetDownloadCost}|{mp3.GetFileSizeInMBs}|{mp3.GetAlbumCoverPhoto}";
+                        string line = $"{mp3.GetSongTitle()}|{mp3.GetArtist()}|{mp3.GetSongReleaseDate()}|{mp3.GetPlayBackTimeInMinutes()}" +
+                            $"|{mp3.GetGenre()}|{mp3.GetDownloadCost()}|{mp3.GetFileSizeInMBs()}|{mp3.GetAlbumCoverPhoto()}";
                         writer.WriteLine(line);
                     }
                 }
