@@ -1,9 +1,9 @@
 ﻿/**
 *--------------------------------------------------------------------
 * File name: {Playlist.cs}
-* Project name: {Project 3 - MP3 Tracker}
+* Project name: {Projec 4 - MP3 Tracker with Files}
 *--------------------------------------------------------------------
-* Author’s name and email: {Daniel Lynch ynchda@etsu.edu}
+* Author’s name and email: {Daniel Lynch lynchda@etsu.edu}
 * Course-Section: {002}
 * Creation Date: {02/06/2023}
 * -------------------------------------------------------------------
@@ -16,7 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Project_1___MP3
+namespace Project__4__MP3_Tracker_with_Files
 {
     public class Playlist
     { 
@@ -24,7 +24,7 @@ namespace Project_1___MP3
         private string _playlistName { get; set; }
         private string _creatorName { get; set; }
         private DateTime _creationDate { get; set; }
-        public  bool SaveNeeded { get; set; }
+        public bool SaveNeeded { get; set; }
 
         public Playlist(string playlistName, string creatorName, DateTime creationDate)
         {

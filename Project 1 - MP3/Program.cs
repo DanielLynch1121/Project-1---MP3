@@ -1,9 +1,9 @@
 ﻿/**
 *--------------------------------------------------------------------
 * File name: {Program.cs}
-* Project name: {Project 3 - MP3}
+* Project name: {Projec 4 - MP3 Tracker with Files}
 *--------------------------------------------------------------------
-* Author’s name and email: {Daniel Lynch ynchda@etsu.edu}
+* Author’s name and email: {Daniel Lynch lynchda@etsu.edu}
 * Course-Section: {002}
 * Creation Date: {02/02/2023}
 * -------------------------------------------------------------------
@@ -11,7 +11,7 @@
 using System;
 using System.Globalization;
 
-namespace Project_1___MP3
+namespace Project__4__MP3_Tracker_with_Files
 {
     public class Program
     {
@@ -31,11 +31,10 @@ namespace Project_1___MP3
             string playlistName;
             string titleToRemove;
             string creatorName;
-            bool saveNeeded;
+            
             DateTime creationDate;
             MP3 userMP3 = null;
             Playlist userPlaylist = null;
-            
             // Welcome Page with my center text Method
             CenterText("Project: MP3 Tracker");
             CenterText("-------------------------------");
@@ -227,7 +226,7 @@ namespace Project_1___MP3
                         break;
                     case 5:
                         Console.Clear();
-                        if (userMP3 != null)
+                        if (userPlaylist != null)
                         {
                             userPlaylist.DisplayAllMP3s();
                         }
@@ -348,29 +347,6 @@ namespace Project_1___MP3
                         break;
                     case 11:
                         Console.Clear();
-                        if (saveNeeded = true)
-                        {
-                            Console.WriteLine("The current playlist has unsaved changes. Do you want to save the changes? (Y/N)");
-                            ConsoleKey response = Console.ReadKey(true).Key;
-                            if (response == ConsoleKey.Y)
-                            {
-                                Console.WriteLine("Enter the file name:");
-                                string savefileName = Console.ReadLine();
-                                while (string.IsNullOrEmpty(savefileName))
-                                {
-                                    Console.Write("File name cannot be empty. Please enter the file name again: ");
-                                    savefileName = Console.ReadLine();
-                                }
-                                Console.WriteLine("Enter the file path to save the playlist:");
-                                string saveFilePath = Console.ReadLine();
-                                while (string.IsNullOrEmpty(saveFilePath))
-                                {
-                                    Console.Write("File path cannot be empty. Please enter the file path again: ");
-                                    saveFilePath = Console.ReadLine();
-                                }
-                                userPlaylist.SaveToFile(savefileName, saveFilePath);
-                            }
-                        }
                         if (userPlaylist != null)
                         {
                             Console.Write("Enter the file path of the MP3s you would like to import:");
@@ -387,11 +363,16 @@ namespace Project_1___MP3
                                 {
                                     userPlaylist.AddMP3(mp3);
                                 }
-                                userPlaylist.DisplayAllMP3s();
-                            }   
-                            CenterText("Press <Enter> to continue");
-                            while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+                            }
+                            userPlaylist.SaveNeeded = true;
                         }
+                        else
+                        {
+                            Console.WriteLine("Please create a playlist before importing a file: ");   
+                        }
+                        CenterText("Press <Enter> to continue");
+                        while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+
                         break;
                     case 12:
                         Console.Clear();
